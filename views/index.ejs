@@ -1,0 +1,27 @@
+<!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
+<h1><strong>StravaCal</strong></h1>
+<hr />
+<p>Pridajte Jed&aacute;ln&iacute;ček zo <span style="text-decoration: underline;">Strava.cz</span>&nbsp;</p>
+<p>&nbsp;</p>
+<blockquote>
+<p><strong>Č&iacute;slo Jed&aacute;lne</strong></p>
+<input type="text" placeholder="K&oacute;d Jed&aacute;lne (0000)" /> <br />
+<p><em>Predvolen&eacute; č&iacute;slo je 0000</em></p>
+  <a href="" id="linkAp">Apple Calendar/ MS / Android Kalendár</a> |  <a id="linkOt">Ostatné</a>  
+<p>&nbsp;</p>
+</blockquote>
+
+<script>
+var link;
+const input = document.querySelector('input');
+const linkApple = document.getElementById('linkAp');
+const linkOther = document.getElementById('linkOt'); 
+
+input.addEventListener('input', updateValue);
+
+function updateValue(e) {
+  link = `stravacal.charliecat.space/cal/${input.value}`
+  linkApple.setAttribute("href", `webcal://${link}`)
+  linkOther.setAttribute("onClick", `window.prompt("Odoberatelný Kalendár pre ostatné Kalendáre", "https://${link}")`) 
+} 
+</script>
