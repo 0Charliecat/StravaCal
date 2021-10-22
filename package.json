@@ -1,0 +1,21 @@
+{
+  "name": "stravacal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "html2json": "^1.0.2",
+    "ics": "^2.31.0",
+    "simple-json-db": "^1.2.3",
+    "single-byte": "^1.0.7",
+    "teeny-request": "^7.1.3",
+    "windows-1250": "^3.0.2",
+    "xml2js": "^0.4.23"
+  }
+}
