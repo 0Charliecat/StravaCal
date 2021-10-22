@@ -1,1 +1,1 @@
-# StravaCal
+# `📆 🍽` • StravaCal
