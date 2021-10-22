@@ -8,6 +8,6 @@ __Strava.CZ__ do `iCal` Kalendárov
 https://stravacal.charliecat.space/cal/9977
 /\                                 /\  /\
 | Protokol                         |   | Číslo jedálne
-                                   | Chceme kalendar xd
+  Dá sa pouzit aj webcal://        | Chceme kalendar xd
                                    
                                    ```
