@@ -112,38 +112,22 @@ function zGramatovanie(text) {
   return text
 }
 
-await function getStrava(id) {
+async function getStrava(id) {
   if (id === undefined) {
     id = "0000"
   }
   let tobereturned;
-  await request({uri: `http://www.strava.cz/foxisapi/foxisapi.dll/istravne.istravne.process?xmljidelnickyA&zarizeni=${jidelna}&jazy%20k=SK&httphlavicka=A`}, function (error, response, body) {
+  await request({uri: `http://www.strava.cz/foxisapi/foxisapi.dll/istravne.istravne.process?xmljidelnickyA&zarizeni=${id}&jazy%20k=SK&httphlavicka=A`}, function (error, response, body) {
       console.log('error:', error); // Print the error if one occurred
       console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       //body = windows1250.encode(body, { mode: 'replacement' });
       let buf = Buffer.from(body, "ascii");
       //console.log(decoder.decode(buf))
       parseString(decoder.decode(buf), function (err, result) {
-        console.dir(result)
+        //console.dir(result)
+        result = result.VFPData.pomjidelnic_xmljidelnic
       });
   });
-
-/*function getStrava(jidelna) {
-
-  let tobereturned;
-    request({uri: `http://www.strava.cz/foxisapi/foxisapi.dll/istravne.istravne.process?xmljidelnickyA&zarizeni=${jidelna}&jazy%20k=SK&httphlavicka=A`}, function (error, response, body) {
-        console.log('error:', error); // Print the error if one occurred
-        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-        //body = windows1250.encode(body, { mode: 'replacement' });
-        let buf = Buffer.from(body, "ascii");
-        console.log(decoder.decode(buf))
-        parseString(decoder.decode(buf), function (err, result) {
-          tobereturned = makeCal(result.VFPData.pomjidelnic_xmljidelnic, jidelna);
-        });
-    });
-    return tobereturned;*/
-
 }
-
-//getStrava(0000).catch(console.error)
-
+  
+//getStrava("0000").catch(console.error)
