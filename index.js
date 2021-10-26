@@ -8,6 +8,7 @@ const { writeFile } = require('fs')
 const decoder = new TextDecoder('utf-8');
 const JSONdb = require('simple-json-db');
 const pekelneRes = new JSONdb('pekelne-restauracie.json');
+const gram = new JSONdb("gram.json")
 
 
 const app = express();
@@ -74,7 +75,7 @@ function makeCal(body, jidelna) {
             productId: "charliecat/stravaCal",
             start: [Number(date[0]), Number(date[1]), Number(date[2]), Number(keychain.time[0]), Number(keychain.time[1])],
             duration: { hours: 0, minutes: 30 },
-            title: obed.nazev.join(),
+            title: `🍽 ${zGramatovanie(obed.druh_popis.join())} • ${obed.nazev.join()}`,
             description: `${obed.popis.join()}\n${obed.popis_al.join()}\n--------\nhttps://www.strava.cz/strava/stravnik/jidelnicky?zarizeni=${jidelna}`,
             location: pekelneRes.get(`${jidelna}j`),
             url: `https://www.strava.cz/strava/stravnik/jidelnicky?zarizeni=${jidelna}`,
@@ -98,3 +99,51 @@ function makeCal(body, jidelna) {
 app.listen(7890, () => {
   console.log(`Server started on port 7890`);
 });
+
+
+function zGramatovanie(text) {
+  gramatika = gram.get('_')
+  gramatika.forEach(element => {
+    text = text.replace(element.from, element.to);
+  })
+  if (text.includes("�")) {
+    gram.set(text, "")
+  }
+  return text
+}
+
+await function getStrava(id) {
+  if (id === undefined) {
+    id = "0000"
+  }
+  let tobereturned;
+  await request({uri: `http://www.strava.cz/foxisapi/foxisapi.dll/istravne.istravne.process?xmljidelnickyA&zarizeni=${jidelna}&jazy%20k=SK&httphlavicka=A`}, function (error, response, body) {
+      console.log('error:', error); // Print the error if one occurred
+      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+      //body = windows1250.encode(body, { mode: 'replacement' });
+      let buf = Buffer.from(body, "ascii");
+      //console.log(decoder.decode(buf))
+      parseString(decoder.decode(buf), function (err, result) {
+        console.dir(result)
+      });
+  });
+
+/*function getStrava(jidelna) {
+
+  let tobereturned;
+    request({uri: `http://www.strava.cz/foxisapi/foxisapi.dll/istravne.istravne.process?xmljidelnickyA&zarizeni=${jidelna}&jazy%20k=SK&httphlavicka=A`}, function (error, response, body) {
+        console.log('error:', error); // Print the error if one occurred
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+        //body = windows1250.encode(body, { mode: 'replacement' });
+        let buf = Buffer.from(body, "ascii");
+        console.log(decoder.decode(buf))
+        parseString(decoder.decode(buf), function (err, result) {
+          tobereturned = makeCal(result.VFPData.pomjidelnic_xmljidelnic, jidelna);
+        });
+    });
+    return tobereturned;*/
+
+}
+
+//getStrava(0000).catch(console.error)
+
