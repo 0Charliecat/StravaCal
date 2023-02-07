@@ -13,4 +13,4 @@ https://stravacal.charliecat.space/cal/9977
 
 ```
 
-### Jedálne sa dajú nájsť aj tu `=>` https://gist.github.com/slovak-cat/e762d11c90919bc095a3950a93725acc
+### Jedálne sa dajú nájsť aj tu `=>` https://gist.github.com/0charliecat/e762d11c90919bc095a3950a93725acc
